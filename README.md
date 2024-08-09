@@ -8,13 +8,19 @@ Sistema de Matrículas para uma Universidade
 
 ![Caio](/img/profileCaio.png)
 
+<hr />
+
 ### Gustavo Oliveira
 
 ![Gustavo](/img/profileGustavo.png)
 
+<hr />
+
 ### Luis Brescia
 
 ![Luis](/img/profileLuis.png)
+
+<hr />
 
 ### Victor Reis Carlota
 
