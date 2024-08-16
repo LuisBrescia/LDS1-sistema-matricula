@@ -30,7 +30,7 @@ Sistema de Matrículas para uma Universidade
 
 # Sistema de Matrículas - Diagrama de Caso de Uso
 
-![Diagrama de Caso de Uso](/img/UseCaseMatricula.png)
+![Diagrama de Caso de Uso](/img/UseCaseMatriculaa.png)
 
 # Sistema de Matrículas - Histórias de Usuário
 
