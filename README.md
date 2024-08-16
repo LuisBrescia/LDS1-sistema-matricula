@@ -35,6 +35,8 @@ Sistema de Matrículas para uma Universidade
 # Sistema de Matrículas - Histórias de Usuário
 
 ## Como aluno
+- Quero visualizar o histórico de disciplinas cursadas e notas recebidas.
+- Quero visualizar os horários das disciplinas
 - Quero me matricular em até 4 disciplinas obrigatórias e 2 optativas.
 - Quero cancelar matrículas realizadas durante o período de matrículas.
 - Quero poder acessar o sistema e realizar o login para verificar minhas disciplinas matriculadas.
@@ -42,6 +44,7 @@ Sistema de Matrículas para uma Universidade
 
 ## Como professor
 - Quero visualizar a lista de alunos matriculados em cada disciplina que ministro.
+- Quero atualizar as notas dos alunos em cada disciplina que ministro.
 - Quero acessar o sistema e realizar o login para verificar minhas turmas.
 
 ## Como secretaria
@@ -54,3 +57,4 @@ Sistema de Matrículas para uma Universidade
 
 ## Como sistema de cobranças
 - Quero ser notificado pelo sistema de matrículas após o aluno se inscrever em disciplinas, para gerar a cobrança do semestre.
+- Quero ser capaz de ajustar cobranças caso um aluno cancele uma disciplina dentro do período permitido.
