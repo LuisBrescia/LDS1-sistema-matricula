@@ -60,3 +60,7 @@ Sistema de Matrículas para uma Universidade
 
 - Ser notificado pelo sistema de matrículas após o aluno se inscrever em disciplinas, para gerar a cobrança do semestre.
 - Ser capaz de ajustar cobranças caso um aluno cancele uma disciplina dentro do período permitido.
+
+# Diagrama de Classes
+
+![Diagrama de Classes](/img/ClassDiagram.png)
