@@ -1,27 +1,22 @@
-# -*- encoding: utf-8 -*-
-"""
-Python Aplication Template
-Licence: GPLv3
-"""
-
 from flask import Flask
-from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from flask_pymongo import PyMongo
 from flask_login import LoginManager
+from flask_mail import Mail
+from config import Config
 
-app = Flask(__name__)
+db = SQLAlchemy()
+login_manager = LoginManager()
+mail = Mail()
 
-#Configuration of application, see configuration.py, choose one and uncomment.
-#app.config.from_object('configuration.ProductionConfig')
-app.config.from_object('app.configuration.DevelopmentConfig')
-#app.config.from_object('configuration.TestingConfig')
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-bs = Bootstrap(app) #flask-bootstrap
-db = SQLAlchemy(app) #flask-sqlalchemy
+    db.init_app(app)
+    login_manager.init_app(app)
+    mail.init_app(app)
 
-lm = LoginManager()
-lm.setup_app(app)
-lm.login_view = 'login'
+    from app import routes
+    app.register_blueprint(routes.bp)
 
-from app import views, models
+    return app

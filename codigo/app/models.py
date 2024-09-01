@@ -1,31 +1,82 @@
 from app import db
+from flask_login import UserMixin
 
-class ModelExample(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.String(250))
-	content = db.Column(db.Text)
-	date = db.Column(db.DateTime)
+class Aluno(UserMixin, db.Model):
+    # Definição do modelo do Aluno
+    aluno = db.Column(db.String(50), primary_key=True)
+    nome = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable=False)
+    senha = db.Column(db.String(50), nullable=False)
+    matricula = db.Column(db.String(50), nullable=False)
+    cpf = db.Column(db.String(50), nullable=False)
+    rg = db.Column(db.String(50), nullable=False)
+    endereco = db.Column(db.String(50), nullable=False)
+    telefone = db.Column(db.String(50), nullable=False)
+    data_nascimento = db.Column(db.String(50), nullable=False)
+    curso = db.Column(db.String(50), nullable=False)
+    periodo = db.Column(db.String(50), nullable=False)
+    situacao = db.Column(db.String(50), nullable=False)
+    data_matricula = db.Column(db.String(50), nullable=False)
+    data_conclusao = db.Column(db.String(50), nullable=False)
+    data_cancelamento = db.Column(db.String(50), nullable=False)
 
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    user = db.Column(db.String(64), unique = True)
-    password = db.Column(db.String(500))
-    name = db.Column(db.String(500))
-    email = db.Column(db.String(120), unique = True)
-    # posts = db.relationship('Post', backref = 'author', lazy = 'dynamic')
+class Professor(UserMixin, db.Model):
+    professor = db.Column(db.String(50), primary_key=True)
+    nome = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable=False)
+    senha = db.Column(db.String(50), nullable=False)
+    cpf = db.Column(db.String(50), nullable=False)
+    rg = db.Column(db.String(50), nullable=False)
+    endereco = db.Column(db.String(50), nullable=False)
+    telefone = db.Column(db.String(50), nullable=False)
+    data_nascimento = db.Column(db.String(50), nullable=False)
+    titulacao = db.Column(db.String(50), nullable=False)
+    data_admissao = db.Column(db.String(50), nullable=False)
+    situacao = db.Column(db.String(50), nullable=False)
+    data_demissao = db.Column(db.String(50), nullable=False)
 
-    def is_authenticated(self):
-        return True
 
-    def is_active(self):
-        return True
+class Disciplina(db.Model):
+    disciplina = db.Column(db.String(50), primary_key=True)
+    nome = db.Column(db.String(50), nullable=False)
+    carga_horaria = db.Column(db.String(50), nullable=False)
+    curso = db.Column(db.String(50), nullable=False)
+    periodo = db.Column(db.String(50), nullable=False)
+    professor = db.Column(db.String(50), nullable=False)
+    situacao = db.Column(db.String(50), nullable=False)
 
-    def is_anonymous(self):
-        return False
 
-    def get_id(self):
-        return str(self.id)
+class Matricula(db.Model):
+    matricula = db.Column(db.String(50), primary_key=True)
+    aluno = db.Column(db.String(50), nullable=False)
+    disciplina = db.Column(db.String(50), nullable=False)
+    situacao = db.Column(db.String(50), nullable=False)
+    data_matricula = db.Column(db.String(50), nullable=False)
+    data_cancelamento = db.Column(db.String(50), nullable=False)
 
-    def __repr__(self):
-        return '<User %r>' % (self.nickname)
+
+class Secretaria(UserMixin, db.Model):
+    secretaria = db.Column(db.String(50), primary_key=True)
+    nome = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable=False)
+    senha = db.Column(db.String(50), nullable=False)
+    cpf = db.Column(db.String(50), nullable=False)
+    rg = db.Column(db.String(50), nullable=False)
+    endereco = db.Column(db.String(50), nullable=False)
+    telefone = db.Column(db.String(50), nullable=False)
+    data_nascimento = db.Column(db.String(50), nullable=False)
+    data_admissao = db.Column(db.String(50), nullable=False)
+    situacao = db.Column(db.String(50), nullable=False)
+    data_demissao = db.Column(db.String(50), nullable=False) 
+
+
+class SistemaCobrancas(db.Model):
+    sistemacobrancas = db.Column(db.String(50), primary_key=True)
+    aluno = db.Column(db.String(50), nullable=False)
+    disciplina = db.Column(db.String(50), nullable=False)
+    valor = db.Column(db.String(50), nullable=False)
+    data_vencimento = db.Column(db.String(50), nullable=False)
+    situacao = db.Column(db.String(50), nullable=False)
+    data_pagamento = db.Column(db.String(50), nullable=False)
+    
