@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Histórico de Disciplinas{% endblock %}
+
+{% block content %}
+<h2>Histórico de Disciplinas</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Disciplina</th>
+            <th>Horário</th>
+            <th>Nota</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for matricula in matriculas %}
+        <tr>
+            <td>{{ matricula.disciplina.nome }}</td>
+            <td>{{ matricula.disciplina.horario }}</td>
+            <td>{{ matricula.nota }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,31 +1,47 @@
 from app import db
+from flask_login import UserMixin
 
-class ModelExample(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	title = db.Column(db.String(250))
-	content = db.Column(db.Text)
-	date = db.Column(db.DateTime)
+class Aluno(UserMixin, db.Model):
+    __tablename__ = 'alunos'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(150), nullable=False)
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    senha = db.Column(db.String(150), nullable=False)
+    matriculas = db.relationship('Matricula', backref='aluno', lazy=True)
 
+class Professor(UserMixin, db.Model):
+    __tablename__ = 'professores'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(150), nullable=False)
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    senha = db.Column(db.String(150), nullable=False)
+    disciplinas = db.relationship('Disciplina', backref='professor', lazy=True)
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    user = db.Column(db.String(64), unique = True)
-    password = db.Column(db.String(500))
-    name = db.Column(db.String(500))
-    email = db.Column(db.String(120), unique = True)
-    # posts = db.relationship('Post', backref = 'author', lazy = 'dynamic')
+class Disciplina(db.Model):
+    __tablename__ = 'disciplinas'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(150), nullable=False)
+    horario = db.Column(db.String(50), nullable=False)
+    professor_id = db.Column(db.Integer, db.ForeignKey('professores.id'), nullable=False)
+    matriculas = db.relationship('Matricula', backref='disciplina', lazy=True)
 
-    def is_authenticated(self):
-        return True
+class Matricula(db.Model):
+    __tablename__ = 'matriculas'
+    id = db.Column(db.Integer, primary_key=True)
+    aluno_id = db.Column(db.Integer, db.ForeignKey('alunos.id'), nullable=False)
+    disciplina_id = db.Column(db.Integer, db.ForeignKey('disciplinas.id'), nullable=False)
+    nota = db.Column(db.Float, nullable=True)
 
-    def is_active(self):
-        return True
+class Secretaria(UserMixin, db.Model):
+    __tablename__ = 'secretaria'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(150), nullable=False)
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    senha = db.Column(db.String(150), nullable=False)
 
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return str(self.id)
-
-    def __repr__(self):
-        return '<User %r>' % (self.nickname)
+class SistemaCobrancas(db.Model):
+    __tablename__ = 'sistema_cobrancas'
+    id = db.Column(db.Integer, primary_key=True)
+    aluno_id = db.Column(db.Integer, db.ForeignKey('alunos.id'), nullable=False)
+    valor = db.Column(db.Float, nullable=False)
+    status = db.Column(db.String(50), nullable=False)  # ex: 'pendente', 'pago'

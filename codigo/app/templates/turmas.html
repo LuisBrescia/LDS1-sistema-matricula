@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Minhas Turmas{% endblock %}
+
+{% block content %}
+<h2>Minhas Turmas</h2>
+{% for disciplina in disciplinas %}
+    <h3>{{ disciplina.nome }} - {{ disciplina.horario }}</h3>
+    <ul>
+        {% for matricula in disciplina.matriculas %}
+        <li>{{ matricula.aluno.nome }} - Nota: {{ matricula.nota }}</li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+{% endblock %}

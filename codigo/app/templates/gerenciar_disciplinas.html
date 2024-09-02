@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Gerenciar Disciplinas{% endblock %}
+
+{% block content %}
+<h2>Gerenciar Disciplinas</h2>
+<form method="POST">
+    <label for="nome">Nome:</label>
+    <input type="text" name="nome" id="nome" required>
+    <label for="horario">Horário:</label>
+    <input type="text" name="horario" id="horario" required>
+    <label for="professor_id">Professor:</label>
+    <select name="professor_id" id="professor_id">
+        {% for professor in professores %}
+        <option value="{{ professor.id }}">{{ professor.nome }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Adicionar Disciplina</button>
+</form>
+<hr>
+<h3>Disciplinas Existentes</h3>
+<ul>
+    {% for disciplina in disciplinas %}
+    <li>{{ disciplina.nome }} - {{ disciplina.horario }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

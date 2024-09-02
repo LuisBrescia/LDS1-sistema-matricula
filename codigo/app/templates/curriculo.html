@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Currículo Semestral{% endblock %}
+
+{% block content %}
+<h2>Currículo Semestral</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Disciplina</th>
+            <th>Horário</th>
+            <th>Professor</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for disciplina in disciplinas %}
+        <tr>
+            <td>{{ disciplina.nome }}</td>
+            <td>{{ disciplina.horario }}</td>
+            <td>{{ disciplina.professor.nome }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
