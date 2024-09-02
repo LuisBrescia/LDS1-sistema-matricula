@@ -1,21 +1,23 @@
 from app import db
 from flask_login import UserMixin
 
-class Aluno(UserMixin, db.Model):
-    __tablename__ = 'alunos'
+class User(UserMixin, db.Model):
+    __abstract__ = True  # Essa classe não será uma tabela própria no banco de dados
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(150), nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
     senha = db.Column(db.String(150), nullable=False)
+
+class Aluno(User):
+    __tablename__ = 'alunos'
     matriculas = db.relationship('Matricula', backref='aluno', lazy=True)
 
-class Professor(UserMixin, db.Model):
+class Professor(User):
     __tablename__ = 'professores'
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(150), nullable=False)
-    email = db.Column(db.String(150), unique=True, nullable=False)
-    senha = db.Column(db.String(150), nullable=False)
     disciplinas = db.relationship('Disciplina', backref='professor', lazy=True)
+
+class Secretaria(User):
+    __tablename__ = 'secretaria'
 
 class Disciplina(db.Model):
     __tablename__ = 'disciplinas'
@@ -31,13 +33,6 @@ class Matricula(db.Model):
     aluno_id = db.Column(db.Integer, db.ForeignKey('alunos.id'), nullable=False)
     disciplina_id = db.Column(db.Integer, db.ForeignKey('disciplinas.id'), nullable=False)
     nota = db.Column(db.Float, nullable=True)
-
-class Secretaria(UserMixin, db.Model):
-    __tablename__ = 'secretaria'
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(150), nullable=False)
-    email = db.Column(db.String(150), unique=True, nullable=False)
-    senha = db.Column(db.String(150), nullable=False)
 
 class SistemaCobrancas(db.Model):
     __tablename__ = 'sistema_cobrancas'

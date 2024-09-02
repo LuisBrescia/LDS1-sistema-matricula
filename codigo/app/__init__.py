@@ -14,9 +14,18 @@ def create_app():
     
     db.init_app(app)
     login_manager.init_app(app)
+
+    # Importando os modelos aqui para evitar a importação circular
+    from app.models import Aluno, Professor, Secretaria
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return Aluno.query.get(int(user_id)) or Professor.query.get(int(user_id)) or Secretaria.query.get(int(user_id))
     
     with app.app_context():
-        from . import routes, models
+        from . import routes
+        app.register_blueprint(routes.bp)
+
         db.create_all()
         
-        return app
+    return app

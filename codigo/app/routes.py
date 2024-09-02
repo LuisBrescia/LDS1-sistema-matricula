@@ -1,10 +1,14 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, login_required, logout_user, current_user
 from app import db
-from app.models import Aluno, Professor, Disciplina, Matricula, Secretaria
+from app.models import Aluno, Professor, Disciplina, Matricula, Secretaria, SistemaCobrancas, User
 from werkzeug.security import generate_password_hash, check_password_hash
 
 bp = Blueprint('main', __name__)
+
+@bp.route('/test')
+def test():
+    return "A rota de teste está funcionando!"
 
 @bp.route('/')
 def index():
