@@ -1,82 +1,48 @@
-from app import db
-from flask_login import UserMixin
+# models.py
+from flask_sqlalchemy import SQLAlchemy
+from app import app
 
-class Aluno(UserMixin, db.Model):
-    # Definição do modelo do Aluno
-    aluno = db.Column(db.String(50), primary_key=True)
-    nome = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(50), nullable=False)
-    senha = db.Column(db.String(50), nullable=False)
-    matricula = db.Column(db.String(50), nullable=False)
-    cpf = db.Column(db.String(50), nullable=False)
-    rg = db.Column(db.String(50), nullable=False)
-    endereco = db.Column(db.String(50), nullable=False)
-    telefone = db.Column(db.String(50), nullable=False)
-    data_nascimento = db.Column(db.String(50), nullable=False)
-    curso = db.Column(db.String(50), nullable=False)
-    periodo = db.Column(db.String(50), nullable=False)
-    situacao = db.Column(db.String(50), nullable=False)
-    data_matricula = db.Column(db.String(50), nullable=False)
-    data_conclusao = db.Column(db.String(50), nullable=False)
-    data_cancelamento = db.Column(db.String(50), nullable=False)
+db = SQLAlchemy(app)
 
+class Aluno(db.Model):
+    __tablename__ = 'alunos'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False)
+    matricula = db.Column(db.String(20), unique=True, nullable=False)
+    senha = db.Column(db.String(100), nullable=False)
 
-class Professor(UserMixin, db.Model):
-    professor = db.Column(db.String(50), primary_key=True)
-    nome = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(50), nullable=False)
-    senha = db.Column(db.String(50), nullable=False)
-    cpf = db.Column(db.String(50), nullable=False)
-    rg = db.Column(db.String(50), nullable=False)
-    endereco = db.Column(db.String(50), nullable=False)
-    telefone = db.Column(db.String(50), nullable=False)
-    data_nascimento = db.Column(db.String(50), nullable=False)
-    titulacao = db.Column(db.String(50), nullable=False)
-    data_admissao = db.Column(db.String(50), nullable=False)
-    situacao = db.Column(db.String(50), nullable=False)
-    data_demissao = db.Column(db.String(50), nullable=False)
+    def __repr__(self):
+        return f'<Aluno {self.nome}>'
 
+class Professor(db.Model):
+    __tablename__ = 'professores'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False)
+    senha = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):
+        return f'<Professor {self.nome}>'
 
 class Disciplina(db.Model):
-    disciplina = db.Column(db.String(50), primary_key=True)
-    nome = db.Column(db.String(50), nullable=False)
-    carga_horaria = db.Column(db.String(50), nullable=False)
-    curso = db.Column(db.String(50), nullable=False)
-    periodo = db.Column(db.String(50), nullable=False)
-    professor = db.Column(db.String(50), nullable=False)
-    situacao = db.Column(db.String(50), nullable=False)
+    __tablename__ = 'disciplinas'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False)
+    codigo = db.Column(db.String(20), unique=True, nullable=False)
+    creditos = db.Column(db.Integer, nullable=False)
+    professor_id = db.Column(db.Integer, db.ForeignKey('professores.id'), nullable=False)
+    professor = db.relationship('Professor', backref=db.backref('disciplinas', lazy=True))
 
+    def __repr__(self):
+        return f'<Disciplina {self.nome}>'
 
 class Matricula(db.Model):
-    matricula = db.Column(db.String(50), primary_key=True)
-    aluno = db.Column(db.String(50), nullable=False)
-    disciplina = db.Column(db.String(50), nullable=False)
-    situacao = db.Column(db.String(50), nullable=False)
-    data_matricula = db.Column(db.String(50), nullable=False)
-    data_cancelamento = db.Column(db.String(50), nullable=False)
+    __tablename__ = 'matriculas'
+    id = db.Column(db.Integer, primary_key=True)
+    aluno_id = db.Column(db.Integer, db.ForeignKey('alunos.id'), nullable=False)
+    disciplina_id = db.Column(db.Integer, db.ForeignKey('disciplinas.id'), nullable=False)
 
+    aluno = db.relationship('Aluno', backref=db.backref('matriculas', lazy=True))
+    disciplina = db.relationship('Disciplina', backref=db.backref('matriculas', lazy=True))
 
-class Secretaria(UserMixin, db.Model):
-    secretaria = db.Column(db.String(50), primary_key=True)
-    nome = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(50), nullable=False)
-    senha = db.Column(db.String(50), nullable=False)
-    cpf = db.Column(db.String(50), nullable=False)
-    rg = db.Column(db.String(50), nullable=False)
-    endereco = db.Column(db.String(50), nullable=False)
-    telefone = db.Column(db.String(50), nullable=False)
-    data_nascimento = db.Column(db.String(50), nullable=False)
-    data_admissao = db.Column(db.String(50), nullable=False)
-    situacao = db.Column(db.String(50), nullable=False)
-    data_demissao = db.Column(db.String(50), nullable=False) 
-
-
-class SistemaCobrancas(db.Model):
-    sistemacobrancas = db.Column(db.String(50), primary_key=True)
-    aluno = db.Column(db.String(50), nullable=False)
-    disciplina = db.Column(db.String(50), nullable=False)
-    valor = db.Column(db.String(50), nullable=False)
-    data_vencimento = db.Column(db.String(50), nullable=False)
-    situacao = db.Column(db.String(50), nullable=False)
-    data_pagamento = db.Column(db.String(50), nullable=False)
-    
+    def __repr__(self):
+        return f'<Matricula Aluno: {self.aluno.nome}, Disciplina: {self.disciplina.nome}>'

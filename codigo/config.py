@@ -6,7 +6,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = 'smtp.exemplo.com'
     MAIL_PORT = 587
-    MAIL_USERNAME = 'usuario@exemplo.com'
-    MAIL_PASSWORD = 'senha'
+    MAIL_USERNAME = 'root'
+    MAIL_PASSWORD = '1234'
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
