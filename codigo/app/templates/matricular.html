@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Matricular Disciplinas{% endblock %}
+
+{% block content %}
+<h2>Matricular em Disciplinas</h2>
+<form method="POST">
+    {% for disciplina in disciplinas %}
+    <div>
+        <input type="checkbox" id="disciplina_{{ disciplina.id }}" name="disciplinas" value="{{ disciplina.id }}" title="Selecionar disciplina {{ disciplina.nome }}">
+        <label for="disciplina_{{ disciplina.id }}">{{ disciplina.nome }} - {{ disciplina.horario }}</label>
+    </div>
+    {% endfor %}
+    <button type="submit">Matricular</button>
+</form>
+{% endblock %}

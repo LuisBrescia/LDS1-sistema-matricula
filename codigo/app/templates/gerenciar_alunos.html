@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Gerenciar Alunos{% endblock %}
+
+{% block content %}
+<h2>Gerenciar Alunos</h2>
+<form method="POST">
+    <label for="nome">Nome:</label>
+    <input type="text" name="nome" id="nome" required>
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" required>
+    <label for="senha">Senha:</label>
+    <input type="password" name="senha" id="senha" required>
+    <button type="submit">Adicionar Aluno</button>
+</form>
+<hr>
+<h3>Alunos Cadastrados</h3>
+<ul>
+    {% for aluno in alunos %}
+    <li>{{ aluno.nome }} - {{ aluno.email }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

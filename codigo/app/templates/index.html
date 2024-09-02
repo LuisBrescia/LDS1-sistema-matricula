@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+<h2>Bem-vindo ao Sistema de Matrículas</h2>
+<p>Selecione uma das opções no menu para começar.</p>
+
+{% if current_user.is_authenticated %}
+    <p>Você está logado como: <strong>{{ current_user.nome }}</strong></p>
+    <ul>
+        {% if current_user.__class__.__name__ == 'Aluno' %}
+            <li><a href="{{ url_for('main.historico_aluno') }}">Ver Histórico</a></li>
+            <li><a href="{{ url_for('main.matricular_disciplinas') }}">Matricular em Disciplinas</a></li>
+        {% elif current_user.__class__.__name__ == 'Professor' %}
+            <li><a href="{{ url_for('main.turmas_professor') }}">Ver Turmas</a></li>
+        {% elif current_user.__class__.__name__ == 'Secretaria' %}
+            <li><a href="{{ url_for('main.gerar_curriculo') }}">Gerar Currículo</a></li>
+            <li><a href="{{ url_for('main.gerenciar_disciplinas') }}">Gerenciar Disciplinas</a></li>
+            <li><a href="{{ url_for('main.gerenciar_professores') }}">Gerenciar Professores</a></li>
+            <li><a href="{{ url_for('main.gerenciar_alunos') }}">Gerenciar Alunos</a></li>
+        {% endif %}
+    </ul>
+{% else %}
+    <p><a href="{{ url_for('main.login') }}">Faça login</a> para acessar o sistema.</p>
+{% endif %}
+{% endblock %}
