@@ -40,6 +40,33 @@ def historico_aluno():
         matriculas = Matricula.query.filter_by(aluno_id=current_user.id).all()
         return render_template('historico.html', matriculas=matriculas)
     return redirect(url_for('main.index'))
+    
+
+@bp.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        nome = request.form.get('nome')
+        email = request.form.get('email')
+        senha = request.form.get('senha')
+        tipo = request.form.get('tipo')  # 'aluno', 'professor'
+
+        senha_hash = generate_password_hash(senha, method='sha256')
+
+        if tipo == 'aluno':
+            novo_usuario = Aluno(nome=nome, email=email, senha=senha_hash)
+        elif tipo == 'professor':
+            novo_usuario = Professor(nome=nome, email=email, senha=senha_hash)
+        else:
+            flash('Tipo de usuário inválido.', 'danger')
+            return redirect(url_for('main.register'))
+
+        db.session.add(novo_usuario)
+        db.session.commit()
+        flash('Registro realizado com sucesso! Agora você pode fazer login.', 'success')
+        return redirect(url_for('main.login'))
+    
+    return render_template('register.html')
+
 
 @bp.route('/aluno/matricular', methods=['GET', 'POST'])
 @login_required

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro{% endblock %}
+
+{% block content %}
+<h2>Registrar-se</h2>
+<form method="POST">
+    <label for="nome">Nome:</label>
+    <input type="text" name="nome" id="nome" required>
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" required>
+
+    <label for="senha">Senha:</label>
+    <input type="password" name="senha" id="senha" required>
+
+    <label for="tipo">Tipo de Usuário:</label>
+    <select name="tipo" id="tipo" required>
+        <option value="aluno">Aluno</option>
+        <option value="professor">Professor</option>
+    </select>
+
+    <button type="submit">Registrar</button>
+</form>
+{% endblock %}

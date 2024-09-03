@@ -1,67 +1,81 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
 }
 
 header {
     background-color: #333;
     color: #fff;
-    padding: 10px 0;
+    padding: 15px;
     text-align: center;
+    font-size: 20px;
 }
 
 header nav ul {
     list-style: none;
-    margin: 0;
     padding: 0;
 }
 
 header nav ul li {
     display: inline;
-    margin-right: 20px;
+    margin: 0 15px;
 }
 
 header nav ul li a {
     color: #fff;
     text-decoration: none;
+    font-weight: bold;
 }
 
 main {
+    max-width: 900px;
+    margin: 30px auto;
     padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
     color: #333;
+    font-size: 24px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+form {
+    display: flex;
+    flex-direction: column;
 }
 
-table, th, td {
-    border: 1px solid #ddd;
+form label {
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-th, td {
+form input, form select, form button {
     padding: 10px;
-    text-align: left;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
 }
 
-button {
+form input:focus, form select:focus, form button:focus {
+    border-color: #333;
+}
+
+form button {
     background-color: #333;
     color: #fff;
     border: none;
-    padding: 10px 20px;
     cursor: pointer;
-    margin-top: 10px;
+    transition: background-color 0.3s;
 }
 
-button:hover {
+form button:hover {
     background-color: #555;
 }
 
@@ -71,59 +85,16 @@ button:hover {
 }
 
 .flashes li {
-    margin-bottom: 10px;
     padding: 10px;
-    border-radius: 5px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: #fff;
 }
 
 .flashes li.success {
     background-color: #4CAF50;
-    color: white;
 }
 
 .flashes li.danger {
     background-color: #f44336;
-    color: white;
-}
-
-form {
-    margin-bottom: 20px;
-}
-
-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-form input, form select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-form input[type="email"], form input[type="password"], form input[type="text"] {
-    width: calc(100% - 16px);
-}
-
-hr {
-    margin: 20px 0;
-    border: 0;
-    border-top: 1px solid #ddd;
-}
-
-ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-ul li {
-    background: #f4f4f4;
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
 }
