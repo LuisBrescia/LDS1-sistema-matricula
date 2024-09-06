@@ -1,21 +1,26 @@
+/* Fonte e estilo de fundo */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7f6;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    color: #333;
 }
 
+/* Cabeçalho */
 header {
-    background-color: #333;
+    background-color: #007bff; /* Azul mais moderno */
     color: #fff;
-    padding: 10px 0;
+    padding: 15px;
     text-align: center;
+    font-size: 24px;
+    border-bottom: 3px solid #0056b3; /* Linha de separação sutil */
 }
 
 header nav ul {
     list-style: none;
-    margin: 0;
     padding: 0;
+    margin: 0;
 }
 
 header nav ul li {
@@ -26,104 +31,139 @@ header nav ul li {
 header nav ul li a {
     color: #fff;
     text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
 }
 
+header nav ul li a:hover {
+    color: #e2e6ea; /* Tom mais claro no hover */
+}
+
+/* Conteúdo principal */
 main {
-    padding: 20px;
+    max-width: 960px;
+    margin: 30px auto;
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Títulos */
 h2 {
-    color: #333;
+    color: #007bff; /* Cor moderna para o título */
+    font-size: 26px;
     margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-}
-
-button {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #555;
-}
-
-.flashes {
-    list-style: none;
-    padding: 0;
-}
-
-.flashes li {
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.flashes li.success {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.flashes li.danger {
-    background-color: #f44336;
-    color: white;
-}
-
+/* Formulários */
 form {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 20px;
 }
 
 form label {
-    display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: bold;
+    color: #555; /* Cor mais suave */
 }
 
-form input, form select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
+form input, form select, form button {
+    padding: 12px;
+    margin-bottom: 15px;
     border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
 }
 
-form input[type="email"], form input[type="password"], form input[type="text"] {
-    width: calc(100% - 16px);
+form input:focus, form select:focus, form button:focus {
+    border-color: #007bff; /* Borda azul no foco */
+    outline: none;
 }
 
-hr {
-    margin: 20px 0;
-    border: 0;
-    border-top: 1px solid #ddd;
+/* Botões do formulário */
+form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Listas */
 ul {
-    list-style-type: none;
-    padding-left: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 ul li {
-    background: #f4f4f4;
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
+    background-color: #5a5a5a;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ul li:last-child {
+    border-bottom: none;
+}
+
+ul li button {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
     border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+ul li button:hover {
+    background-color: #c9302c;
+}
+
+/* Links */
+a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    main {
+        padding: 20px;
+    }
+
+    header {
+        font-size: 20px;
+    }
+
+    ul li {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    form input, form select, form button {
+        font-size: 15px;
+        padding: 10px;
+    }
 }

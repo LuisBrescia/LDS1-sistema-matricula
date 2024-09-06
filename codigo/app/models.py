@@ -10,7 +10,17 @@ class User(UserMixin, db.Model):
 
 class Aluno(User):
     __tablename__ = 'alunos'
+    cursos_opcoes = [
+        'Ciência da Computação',
+        'Engenharia de Software',
+        'Engenharia da Computação',
+        'Matemática Computacional',
+        'Sistemas de Informação'
+    ]
+    curso = db.Column(db.String(100), nullable=False)
+    matricula_trancada = db.Column(db.Boolean, default=False)  # Trancamento de matrícula
     matriculas = db.relationship('Matricula', backref='aluno', lazy=True)
+
 
 class Professor(User):
     __tablename__ = 'professores'

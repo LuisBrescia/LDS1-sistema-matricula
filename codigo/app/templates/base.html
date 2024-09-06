@@ -15,6 +15,7 @@
                     <li><a href="{{ url_for('main.logout') }}">Sair</a></li>
                 {% else %}
                     <li><a href="{{ url_for('main.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('main.register') }}">Registrar</a></li>
                 {% endif %}
             </ul>
         </nav>
@@ -23,16 +24,16 @@
         {% with messages = get_flashed_messages(with_categories=True) %}
             {% if messages %}
                 <ul class="flashes">
-                {% for category, message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
                 </ul>
             {% endif %}
         {% endwith %}
         {% block content %}{% endblock %}
     </main>
     <footer>
-        <p>© 2024 Sistema Escolar</p>
+        <p style="text-align: center; padding: 10px;">© 2024 Sistema Escolar</p>
     </footer>
 </body>
 </html>
