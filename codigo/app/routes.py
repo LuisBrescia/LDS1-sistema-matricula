@@ -19,12 +19,17 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         senha = request.form.get('senha')
+        
+        # Procurar o usuário no banco de dados entre Aluno, Professor e Secretaria
         user = Aluno.query.filter_by(email=email).first() or \
                Professor.query.filter_by(email=email).first() or \
                Secretaria.query.filter_by(email=email).first()
 
         if user and check_password_hash(user.senha, senha):
+            # Autenticar o usuário correto
             login_user(user)
+            
+            # Redirecionar com base no tipo de usuário
             if isinstance(user, Aluno):
                 return redirect(url_for('main.historico_aluno'))
             elif isinstance(user, Professor):
@@ -35,6 +40,7 @@ def login():
             flash('Login inválido. Verifique suas credenciais e tente novamente.', 'danger')
 
     return render_template('login.html')
+
 
 
 @bp.route('/logout')
@@ -58,12 +64,13 @@ def register():
         nome = request.form.get('nome')
         email = request.form.get('email')
         senha = request.form.get('senha')
+        curso = request.form.get('curso')  # Adicionado campo de curso
         tipo = request.form.get('tipo')  # 'aluno', 'professor'
 
-        senha_hash = generate_password_hash(senha, method='sha256')
+        senha_hash = generate_password_hash(senha, method='pbkdf2:sha256')
 
         if tipo == 'aluno':
-            novo_usuario = Aluno(nome=nome, email=email, senha=senha_hash)
+            novo_usuario = Aluno(nome=nome, email=email, senha=senha_hash, curso=curso)
         elif tipo == 'professor':
             novo_usuario = Professor(nome=nome, email=email, senha=senha_hash)
         else:
@@ -76,6 +83,7 @@ def register():
         return redirect(url_for('main.login'))
     
     return render_template('register.html')
+
 
 
 @bp.route('/aluno/matricular', methods=['GET', 'POST'])
