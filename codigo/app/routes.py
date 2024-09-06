@@ -19,13 +19,23 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         senha = request.form.get('senha')
-        user = Aluno.query.filter_by(email=email).first() or Professor.query.filter_by(email=email).first() or Secretaria.query.filter_by(email=email).first()
+        user = Aluno.query.filter_by(email=email).first() or \
+               Professor.query.filter_by(email=email).first() or \
+               Secretaria.query.filter_by(email=email).first()
+
         if user and check_password_hash(user.senha, senha):
             login_user(user)
-            return redirect(url_for('main.index'))
+            if isinstance(user, Aluno):
+                return redirect(url_for('main.historico_aluno'))
+            elif isinstance(user, Professor):
+                return redirect(url_for('main.turmas_professor'))
+            elif isinstance(user, Secretaria):
+                return redirect(url_for('main.secretaria_dashboard'))
         else:
             flash('Login inválido. Verifique suas credenciais e tente novamente.', 'danger')
+
     return render_template('login.html')
+
 
 @bp.route('/logout')
 @login_required
@@ -72,17 +82,29 @@ def register():
 @login_required
 def matricular_disciplinas():
     if isinstance(current_user, Aluno):
+        if current_user.matricula_trancada:
+            flash('Sua matrícula está trancada para este semestre.', 'warning')
+            return redirect(url_for('main.historico_aluno'))
+
         if request.method == 'POST':
             disciplinas_selecionadas = request.form.getlist('disciplinas')
+            if len(disciplinas_selecionadas) < 1:
+                flash('Você deve se matricular em pelo menos uma disciplina.', 'danger')
+                return redirect(url_for('main.matricular_disciplinas'))
+
             for disciplina_id in disciplinas_selecionadas:
                 nova_matricula = Matricula(aluno_id=current_user.id, disciplina_id=disciplina_id)
                 db.session.add(nova_matricula)
+
             db.session.commit()
+            notificar_sistema_cobrancas(current_user.id)
             flash('Matrículas realizadas com sucesso!', 'success')
             return redirect(url_for('main.historico_aluno'))
+
         disciplinas = Disciplina.query.all()
         return render_template('matricular.html', disciplinas=disciplinas)
     return redirect(url_for('main.index'))
+
 
 @bp.route('/aluno/cancelar_matricula/<int:matricula_id>')
 @login_required
@@ -178,3 +200,25 @@ def gerenciar_alunos():
         alunos = Aluno.query.all()
         return render_template('gerenciar_alunos.html', alunos=alunos)
     return redirect(url_for('main.index'))
+
+@bp.route('/secretaria/trancar_matricula/<int:aluno_id>', methods=['POST'])
+@login_required
+def trancar_matricula(aluno_id):
+    if isinstance(current_user, Secretaria):
+        aluno = Aluno.query.get_or_404(aluno_id)
+        aluno.matricula_trancada = True
+        db.session.commit()
+        flash(f'A matrícula de {aluno.nome} foi trancada.', 'success')
+        return redirect(url_for('main.gerenciar_alunos'))
+    return redirect(url_for('main.index'))
+
+@bp.route('/secretaria/dashboard')
+@login_required
+def secretaria_dashboard():
+    if isinstance(current_user, Secretaria):
+        alunos = Aluno.query.all()
+        professores = Professor.query.all()
+        disciplinas = Disciplina.query.all()
+        return render_template('secretaria_dashboard.html', alunos=alunos, professores=professores, disciplinas=disciplinas)
+    return redirect(url_for('main.index'))
+

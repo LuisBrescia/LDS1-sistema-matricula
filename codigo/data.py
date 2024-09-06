@@ -25,7 +25,8 @@ with app.app_context():
     aluno1 = Aluno(
         nome='Maria Oliveira',
         email='maria.oliveira@escola.com',
-        senha=generate_password_hash('aluno123', method='pbkdf2:sha256')
+        senha=generate_password_hash('aluno123', method='pbkdf2:sha256'),
+        curso='Ciência da Computação'  # Adicione um valor válido para o curso
     )
     db.session.add(aluno1)
     
